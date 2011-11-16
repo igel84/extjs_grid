@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  common: 
+  botanical: 
+  light: 
+  price: 
+  availDate: 
+  indoor: 
+
+two:
+  common: 
+  botanical: 
+  light: 
+  price: 
+  availDate: 
+  indoor: 

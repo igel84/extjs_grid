@@ -1,0 +1,1 @@
+{"success":true,"message":"загруженные данные","data":[<%= @users.collect { |us| '{"id":' + us.id.to_s + ' ,"last":"' + us.last + '"},' } %> ]}

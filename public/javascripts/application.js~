@@ -1,0 +1,7 @@
+callback = function(){
+                alert('Была вызвана функция callback');
+        }
+                
+        function hello2(){
+                 Ext.Msg.alert('Наше пробное сообщение','Hello, World!', callback );    
+        }

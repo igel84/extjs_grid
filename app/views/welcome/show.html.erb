@@ -1,0 +1,127 @@
+<style>
+a { text-decoration: none; color:blue; }
+</style>
+<script>
+Ext.onReady(function() {
+	Ext.QuickTips.init();
+ 
+    var store2 = Ext.create('Ext.data.TreeStore', {
+        proxy: {
+            type: 'ajax',
+            url: '/nodes.js'
+        },
+        root: {
+            text: 'Основное меню',
+            id: 'src',
+            expanded: true
+        },
+        folderSort: true,
+        sorters: [{
+            property: 'text',
+            direction: 'ASC'
+        }]
+    });
+
+    var tree2 = Ext.create('Ext.tree.Panel', {
+        //title: '<div style="text-align:center">МЕНЮ</div>',
+        title: 'МЕНЮ',
+        id: 'tree2',
+        store: store2,
+        width: 250,
+        height: 300,
+        viewConfig: {
+            plugins: {
+                ptype: 'treeviewdragdrop',
+                appendOnly: true
+            }
+        },
+        region: 'west'
+    });   
+    
+    //Ext.get('tree2').on('click', function(node, event){
+    //if(node.isLeaf()){
+    //    alert('SDF')
+    //  }
+    //});
+
+    var viewport = new Ext.Viewport({
+         id:'simplevp'
+        ,layout:'border'
+        ,border:false
+        ,items:[{
+             region:'north'
+            ,height:110
+            ,border:false
+            ,bodyStyle:'background-color:#dfe8f6;padding:10px;' //margin-bottom:5px;'
+            //,title:'North'
+            //,collapsible:true
+            ,contentEl:'adsense-north'
+        },{
+             region:'south'
+            ,height:100
+            ,html:'South'
+            ,border:true
+            ,title:'КОНТАКТЫ'
+            ,bodyStyle:'background-color:#dfe8f6;'
+            ,collapsible:true
+        },{
+             region:'east'
+            ,width:'25%' //200
+            ,html:'East'
+            ,border:true
+            ,bodyStyle:'background-color:#f4f4f4'
+            ,title:'КОРЗИНА'
+            ,collapsible:true
+            //,split: true
+        },{
+             region:'center'
+            ,id:'centerPanel'
+            ,contentEl:'adsense-center'
+            ,border:true
+            ,bodyStyle:'background-color:#f0f0f0;'
+            ,title:'ТОВАР'
+        }, {
+          title: 'меню'
+          ,region: 'west'
+          ,split: true
+          ,width: 200
+          ,layout: 'accordion'
+          ,animate:true
+		      ,fill: true
+          ,items: [
+          <% 10.times do |t| %>  
+            {
+              title: '<a href="#">Affiliates <%= t.to_s %></a>',
+              html: 'Empty',
+              <% if t==4 %>collapsed:false<% end %>
+            }
+          <% if t!=9 %>,<% end %>
+          <% end %>
+          ]
+        }, tree2
+        ]
+    });
+    tree2.getSelectionModel().on('select', function(selModel, record) {
+          if (record.get('leaf')) {
+               Ext.get('centerPanel').load({
+                url:record.getId()+'.html',
+                params: {
+                  text:'sdf'
+                },
+                scripts:true
+                });
+          }
+        });
+});
+</script>
+<div id="adsense-north" class="adsense">
+    <%= image_tag 'logo.png', :style=>'float:left;' %> 
+    <%= image_tag 'img.png', :style=>'float:right;' %> 
+    <div style='float:right;margin-right:20px;margin-top:18px;text-align:right;'>
+    <h1 style='color:grey; font: bold 26px "Serif";'>ИНТЕРНЕТ-МАГАЗИН</h1>
+    <h1 style='color:grey; font: bold 26px "Serif";'>радиостанций и комплектующих</h1>
+    </div>
+</div>
+<div id="adsense-center" class="adsense" style="margin:4px">
+    <b>Описание товара, фото, стоимость ...</b> 
+</div>

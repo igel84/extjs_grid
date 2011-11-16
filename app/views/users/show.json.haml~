@@ -1,0 +1,8 @@
+- if @users.size != 1
+	{"success":true,"message":"загруженные данные","data":[
+	!= @users.collect { |us| '{"id":' + us.id.to_s + ',"email":"'+us.email+'","first":"'+us.first+'","last":"' + us.last + '"},' }
+	]}
+- else
+	{"success":true,"message":"Created record","data":
+	!=@users.collect { |us| '{"id":' + us.id.to_s + ',"email":"'+us.email+'","first":"'+us.first+'","last":"' + us.last + '"}' }
+	}
